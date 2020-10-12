@@ -14,6 +14,37 @@ s3 = boto3.resource(
     aws_access_key_id=data['aws_access_key_id'],
     aws_secret_access_key=data['aws_secret_access_key']
 )
+@app.route("/fox/", methods =["POST", "GET"])    
+def fox_entry():
+    if request.method == "GET":
+            fox = fox_runner()
+            return fox
+   
+def fox_runner():
+    # images = [d for d in s3.Bucket('fetchitbucket').objects.all() if ".jpg" in d]
+    # for obj in s3.Bucket('fetchitbucket').Object("racoon/"):
+    #     print(obj)
+    # Image_Files = [d for d in os.listdir("static/racoon/") if ".jpg" in d]
+    fox = []
+    final_list = []
+    my_bucket = s3.Bucket("fetchitbucket")
+    for object_summary in my_bucket.objects.filter(Prefix="fox/"):
+        fox.append(object_summary.key)
+    del fox[0]
+    for i in fox:
+        final_data = i.replace("fox", "https://fetchitbucket.s3.us-east-2.amazonaws.com/fox")
+        final_list.append(final_data)
+
+    final_image = random.choice(final_list)
+    data = {}
+
+    # Creates a primary catagory
+    data["Fox".lower()] = []
+    # Create a default JSON structure
+    data["Fox".lower()].append({"Image": final_image}) 
+    return json.dumps(data, indent=4, sort_keys=True)
+
+
 @app.route("/racoon/", methods =["POST", "GET"])    
 def racoon_entry():
     if request.method == "GET":
