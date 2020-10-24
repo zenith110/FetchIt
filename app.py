@@ -57,7 +57,7 @@ def racoon_runner():
         raccoon.append(object_summary.key)
     del raccoon[0]
     for i in raccoon:
-        final_data = i.replace("raccoon", "https://fetchitbucket.s3.us-east-2.amazonaws.com/raccoon/")
+        final_data = i.replace("raccoon", "https://fetchitbucket.s3.us-east-2.amazonaws.com/raccoon")
         final_list.append(final_data)
 
     final_image = random.choice(final_list)
