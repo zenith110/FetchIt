@@ -64,9 +64,9 @@ def racoon_runner():
     data = {}
 
     # Creates a primary catagory
-    data["Racoon".lower()] = []
+    data["Raccoon".lower()] = []
     # Create a default JSON structure
-    data["Racoon".lower()].append({"Image": final_image}) 
+    data["Raccoon".lower()].append({"Image": final_image}) 
     return json.dumps(data, indent=4, sort_keys=True)
 
 @app.route("/FE/exams/allexams", methods =["POST", "GET"])
