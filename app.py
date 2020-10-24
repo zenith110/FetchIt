@@ -16,7 +16,7 @@ s3 = boto3.resource(
     aws_secret_access_key=data['aws_secret_access_key']
 )
 
-@app.route("/breeds/allbreeds/", methods = [])
+@app.route("/breeds/allbreeds/", methods = ["POST", "GET"])
 def allbreeds():
     data = {}
     data["All_Species".lower()] = []
