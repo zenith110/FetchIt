@@ -15,7 +15,15 @@ s3 = boto3.resource(
     aws_access_key_id=data['aws_access_key_id'],
     aws_secret_access_key=data['aws_secret_access_key']
 )
+
 @app.route("/breeds/allbreeds/", methods = [])
+def allbreeds():
+    data = {}
+    data["All_Species".lower()] = []
+    data["All_Species".lower()].append(
+        {"Name": "Fox",
+        "Name": "Raccoon"})
+    return json.dumps(data, indent=4, sort_keys=True)
 @app.route("/breeds/fox/", methods =["POST", "GET"])    
 def fox_entry():
     if request.method == "GET":
