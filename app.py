@@ -130,13 +130,13 @@ def random_dsn():
     
 def dsn_runner(dsn_name):
     try:
-        with open("dsn/" + dsn_name +  ".json", encoding="utf8") as json_file:
+        with open("/dsn/" + dsn_name +  ".json", encoding="utf8") as json_file:
             data = json.load(json_file)
         return json.dumps(data, indent=4, sort_keys=True)
     except:
         return "500"
 
-@app.route("FE/questions/stack/", methods =["POST", "GET"])
+@app.route("/FE/questions/stack/", methods =["POST", "GET"])
 def stacks():
      if request.method == "GET":
             stack = request.args.get("name")
