@@ -1,0 +1,7 @@
+{
+    "Problem_Name": "DSN (Dynamic Memory Management in C)",
+    "Seen_On": "August 2018",
+    "Problem_Statement": "Consider allocating space for an array of arrays, where each of the individual lengths of the different small arrays may differ. \nFor example, we might want 5 arrays, which have lengths 10, 5, 20, 100 and 50, respectively. \nWrite a function makeArray that takes in an array of integers itself and the length of that array (so for the example above the first parameter would be the array storing 10, 5, 20, 100 and 50 and the second parameter would have a value of 5) and allocates space for an array of arrays where each of the individual arrays have the lengths specified by the values of the input array. \nBefore returning a pointer to the array of arrays, the function should store 0 in every element of every array allocated.",
+    "Problem_Code": "N/A",
+    "Solution": "https://fetchitbucket.s3.us-east-2.amazonaws.com/FE/Dynamic+Memory+Management/dsn-summer-2018.PNG"
+}

@@ -1,0 +1,7 @@
+{
+    "Problem_Name": "DSN (Dynamic Memory Management in C)",
+    "Seen_On": "Jan 2019",
+    "Problem_Statement": "This problem relies on the following struct definition: \ntypedef struct Employee \n{ \n\t\tchar *first; // Employee's first name. \n\t\tchar *last; // Employee's last name. \n\t\tint ID; // Employee ID. \n} Employee;\n\nConsider the following function, which takes three arrays – each of length n – containing the firstnames, last names, and ID numbers of n employees for some company. \nThe function dynamically allocates an array of n Employee structs, copies the information from the array arguments into the corresponding array of structs, and returns the dynamically allocated array. \na) Fill in the blanks above with the appropriate arguments for each malloc() statement. \nb) Next, write a function that takes a pointer to the array created by the makeArray() function, along with the number of employee records in that array (n) and frees all the dynamically allocated memory associated with that array. The function signature is as follows:",
+    "Problem_Code": "N/A",
+    "Solution": "https://fetchitbucket.s3.us-east-2.amazonaws.com/FE/Dynamic+Memory+Management/dsn-spring-2019.png"
+}
