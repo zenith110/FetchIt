@@ -50,14 +50,14 @@ def racoon_entry():
             return racoon
    
 def racoon_runner():
-    racoon = []
+    raccoon = []
     final_list = []
     my_bucket = s3.Bucket("fetchitbucket")
-    for object_summary in my_bucket.objects.filter(Prefix="racoon/"):
-        racoon.append(object_summary.key)
-    del racoon[0]
-    for i in racoon:
-        final_data = i.replace("racoon", "https://fetchitbucket.s3.us-east-2.amazonaws.com/racoon")
+    for object_summary in my_bucket.objects.filter(Prefix="raccoon/"):
+        raccoon.append(object_summary.key)
+    del raccoon[0]
+    for i in raccoon:
+        final_data = i.replace("racoon", "https://fetchitbucket.s3.us-east-2.amazonaws.com/raccoon")
         final_list.append(final_data)
 
     final_image = random.choice(final_list)
@@ -158,7 +158,7 @@ def stack_runner(stack_name):
         data = json.load(json_file)
     return json.dumps(data, indent=4, sort_keys=True)
 
-@app.route("FE/exam/", methods =["POST", "GET"])    
+@app.route("/FE/exam/", methods =["POST", "GET"])    
 def exam():
     if request.method == "GET":
             exam = request.args.get("name")
