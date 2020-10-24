@@ -69,7 +69,7 @@ def racoon_runner():
     data["Racoon".lower()].append({"Image": final_image}) 
     return json.dumps(data, indent=4, sort_keys=True)
 
-@app.route("FE/exams/allexams", methods =["POST", "GET"])
+@app.route("/FE/exams/allexams", methods =["POST", "GET"])
 def all_exams():
      # Creates a dictionary
     data = {}
@@ -83,7 +83,7 @@ def all_exams():
         data["All_Exams".lower()].append({"Exam": exam_name}) 
     return jsonify(data["All_Exams".lower()])
 
-@app.route("FE/questions/allstacks", methods=["POST", "GET"])
+@app.route("/FE/questions/allstacks", methods=["POST", "GET"])
 def all_stacks():
       # Creates a dictionary
     data = {}
@@ -97,7 +97,7 @@ def all_stacks():
         data["All_Stacks".lower()].append({"Stack": stack_name}) 
     return jsonify(data["All_Stacks".lower()])
 
-@app.route("FE/questions/alldsn/", methods=["POST", "GET"])
+@app.route("/FE/questions/alldsn/", methods=["POST", "GET"])
 def all_dns():
       # Creates a dictionary
     data = {}
@@ -111,7 +111,7 @@ def all_dns():
         data["All_DSN".lower()].append({"DSN": dsn_name}) 
     return jsonify(data["All_DSN".lower()])
 
-@app.route("FE/questions/dsn/", methods =["POST", "GET"])
+@app.route("/FE/questions/dsn/", methods =["POST", "GET"])
 def dsn():
      if request.method == "GET":
             dsn = request.args.get("name")
