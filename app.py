@@ -15,8 +15,8 @@ s3 = boto3.resource(
     aws_access_key_id=data['aws_access_key_id'],
     aws_secret_access_key=data['aws_secret_access_key']
 )
-
-@app.route("/fox/", methods =["POST", "GET"])    
+@app.route("/breeds/allbreeds/", methods = [])
+@app.route("/breeds/fox/", methods =["POST", "GET"])    
 def fox_entry():
     if request.method == "GET":
             fox = fox_runner()
@@ -43,7 +43,7 @@ def fox_runner():
     return json.dumps(data, indent=4, sort_keys=True)
 
 
-@app.route("/racoon/", methods =["POST", "GET"])    
+@app.route("/breeds/raccoon/", methods =["POST", "GET"])    
 def racoon_entry():
     if request.method == "GET":
             racoon = racoon_runner()
