@@ -6,7 +6,7 @@ import os
 import random
 import boto3
 app = Flask(__name__, static_url_path='/static')
-with open("settings/aws_role") as loop:
+with open("settings/aws_role.json") as loop:
     data = json.load(loop)
     
 s3 = boto3.resource(
@@ -15,15 +15,15 @@ s3 = boto3.resource(
     aws_access_key_id=data['aws_access_key_id'],
     aws_secret_access_key=data['aws_secret_access_key']
 )
-
+animal_names = ["Fox", "Raccoon"]
 @app.route("/breeds/allbreeds/", methods = ["POST", "GET"])
 def allbreeds():
     data = {}
     data["All_Species".lower()] = []
-    data["All_Species".lower()].append(
-        {"Name": "Fox",
-        "Name": "Raccoon"})
+    for name in animal_names:
+        data["All_Species".lower()].append({"Name": name}) 
     return json.dumps(data, indent=4, sort_keys=True)
+
 @app.route("/breeds/fox/", methods =["POST", "GET"])    
 def fox_entry():
     if request.method == "GET":
