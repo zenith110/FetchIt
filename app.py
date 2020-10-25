@@ -18,10 +18,10 @@ s3 = boto3.resource(
 animal_names = ["Fox", "Raccoon"]
 @app.route("/breeds/allbreeds/", methods = ["POST", "GET"])
 def allbreeds():
-    data = {}
-    data["All_Species".lower()] = []
+    data = []
     for name in animal_names:
-        data["All_Species".lower()].append({"Name": name}) 
+        data.append({"name": name})
+
     return json.dumps(data, indent=4, sort_keys=True)
 
 @app.route("/breeds/fox/", methods =["POST", "GET"])    
