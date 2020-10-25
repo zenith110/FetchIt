@@ -15,7 +15,7 @@ s3 = boto3.resource(
     aws_access_key_id=data['aws_access_key_id'],
     aws_secret_access_key=data['aws_secret_access_key']
 )
-animal_names = ["Fox", "Raccoon"]
+animal_names = ["Fox", "Raccoon", "Chimpanzee"]
 @app.route("/breeds/allbreeds/", methods = ["POST", "GET"])
 def allbreeds():
     data = []
@@ -24,60 +24,37 @@ def allbreeds():
 
     return jsonify(data)
 
-@app.route("/breeds/fox/", methods =["POST", "GET"])    
-def fox_entry():
+@app.route("/breeds/", methods =["POST", "GET"])    
+def breed_entry():
     if request.method == "GET":
-            fox = fox_runner()
-            return fox
+            breed_name = request.args.get("name")
+            breed_name = breed_name.lower()
+            breed = breed_runner(breed_name)
+            return breed
 
-def fox_runner():
-    fox = []
+def breed_runner(breed_name):
+    print(breed_name)
+    animal = []
     final_list = []
     my_bucket = s3.Bucket("fetchitbucket")
-    for object_summary in my_bucket.objects.filter(Prefix="fox/"):
-        fox.append(object_summary.key)
-    del fox[0]
-    for i in fox:
-        final_data = i.replace("fox", "https://fetchitbucket.s3.us-east-2.amazonaws.com/fox")
+    for object_summary in my_bucket.objects.filter(Prefix=breed_name + "/"):
+        animal.append(object_summary.key)
+    del animal[0]
+    for i in animal:
+        final_data = i.replace(breed_name, "https://fetchitbucket.s3.us-east-2.amazonaws.com/" + breed_name)
         final_list.append(final_data)
 
     final_image = random.choice(final_list)
     data = {}
 
     # Creates a primary catagory
-    data["Fox".lower()] = []
+    data[breed_name.lower()] = []
     # Create a default JSON structure
-    data["Fox".lower()].append({"Image": final_image}) 
+    data[breed_name.lower()].append({"Image": final_image}) 
     return json.dumps(data, indent=4, sort_keys=True)
 
 
-@app.route("/breeds/raccoon/", methods =["POST", "GET"])    
-def racoon_entry():
-    if request.method == "GET":
-            racoon = racoon_runner()
-            return racoon
-   
-def racoon_runner():
-    raccoon = []
-    final_list = []
-    my_bucket = s3.Bucket("fetchitbucket")
-    for object_summary in my_bucket.objects.filter(Prefix="raccoon/"):
-        raccoon.append(object_summary.key)
-    del raccoon[0]
-    for i in raccoon:
-        final_data = i.replace("raccoon", "https://fetchitbucket.s3.us-east-2.amazonaws.com/raccoon")
-        final_list.append(final_data)
-
-    final_image = random.choice(final_list)
-    data = {}
-
-    # Creates a primary catagory
-    data["Raccoon".lower()] = []
-    # Create a default JSON structure
-    data["Raccoon".lower()].append({"Image": final_image}) 
-    return json.dumps(data, indent=4, sort_keys=True)
-
-@app.route("/FE/exams/allexams", methods =["POST", "GET"])
+@app.route("/FE/exams/allexams/", methods =["POST", "GET"])
 def all_exams():
      # Creates a dictionary
     data = {}
