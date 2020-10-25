@@ -22,7 +22,7 @@ def allbreeds():
     for name in animal_names:
         data.append({"name": name})
 
-    return json.dumps(data, indent=4, sort_keys=True)
+    return jsonify(data)
 
 @app.route("/breeds/fox/", methods =["POST", "GET"])    
 def fox_entry():
