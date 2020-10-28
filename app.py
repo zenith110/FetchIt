@@ -16,23 +16,23 @@ s3 = boto3.resource(
     aws_secret_access_key=data['aws_secret_access_key']
 )
 animal_names = ["Fox", "Raccoon", "Chimpanzee", "Lion", "Gorilla", "Hedgehog"]
-@app.route("/breeds/allbreeds/", methods = ["POST", "GET"])
-def allbreeds():
+@app.route("/species/allspecies/", methods = ["POST", "GET"])
+def all_species():
     data = []
     for name in animal_names:
         data.append({"name": name})
 
     return jsonify(data)
 
-@app.route("/breeds/", methods =["POST", "GET"])    
-def breed_entry():
+@app.route("/species/", methods =["POST", "GET"])    
+def species_entry():
     if request.method == "GET":
-            breed_name = request.args.get("name")
-            breed_name = breed_name.lower()
-            breed = breed_runner(breed_name)
-            return breed
+            species_name = request.args.get("name")
+            species_name = species_name.lower()
+            species = species_runner(species_name)
+            return species
 
-def breed_runner(breed_name):
+def species_runner(breed_name):
     animal = []
     final_list = []
     my_bucket = s3.Bucket("fetchitbucket")
