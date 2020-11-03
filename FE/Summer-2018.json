@@ -1,7 +1,7 @@
 {
 	"fe_term" : "Summer 2018",
-	"fe_exam" : "www.cs.ucf.edu/registration/exm/sum2018/FE-May18.pdf",
-	"fe_exam_solutions" : "www.cs.ucf.edu/registration/exm/sum2018/FE-May18-Sol.pdf",
+	"fe_exam" : "http://www.cs.ucf.edu/registration/exm/sum2018/FE-May18.pdf",
+	"fe_exam_solutions" : "http://www.cs.ucf.edu/registration/exm/sum2018/FE-May18-Sol.pdf",
 	"average_score_section_I" : "75",
 	"average_score_section_II" : "55.6",
 	"average_score_total" : "65.3",

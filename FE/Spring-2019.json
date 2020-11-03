@@ -1,7 +1,7 @@
 {
 	"fe_term" : "Spring 2019",
-	"fe_exam" : "www.cs.ucf.edu/registration/exm/spr2019/FE-Jan19.pdf",
-	"fe_exam_solutions" : "www.cs.ucf.edu/registration/exm/spr2019/FE-Jan19-Sol.pdf",
+	"fe_exam" : "http://www.cs.ucf.edu/registration/exm/spr2019/FE-Jan19.pdf",
+	"fe_exam_solutions" : "http://www.cs.ucf.edu/registration/exm/spr2019/FE-Jan19-Sol.pdf",
 	"average_score_section_I" : "70",
 	"average_score_section_II" : "48.2",
 	"average_score_total" : "59.3",

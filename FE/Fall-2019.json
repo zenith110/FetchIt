@@ -1,7 +1,7 @@
 {
 	"fe_term" : "Fall 2019",
-	"fe_exam" : "www.cs.ucf.edu/registration/exm/fall2019/FE-Aug19.pdf",
-	"fe_exam_solutions" : "www.cs.ucf.edu/registration/exm/fall2019/FE-Aug19-Sol.pdf",
+	"fe_exam" : "http://www.cs.ucf.edu/registration/exm/fall2019/FE-Aug19.pdf",
+	"fe_exam_solutions" : "http://www.cs.ucf.edu/registration/exm/fall2019/FE-Aug19-Sol.pdf",
 	"average_score_section_I" : "71",
 	"average_score_section_II" : "35.2",
 	"average_score_total" : "53.1",

@@ -1,7 +1,7 @@
 {
 	"fe_term" : "Spring 2018",
-	"fe_exam" : "www.cs.ucf.edu/registration/exm/spr2018/FE-Jan18.pdf",
-	"fe_exam_solutions" : "www.cs.ucf.edu/registration/exm/spr2018/FE-Jan18-Sol.pdf",
+	"fe_exam" : "http://www.cs.ucf.edu/registration/exm/spr2018/FE-Jan18.pdf",
+	"fe_exam_solutions" : "http://www.cs.ucf.edu/registration/exm/spr2018/FE-Jan18-Sol.pdf",
 	"average_score_section_I" : "68",
 	"average_score_section_II" : "58.1",
 	"average_score_total" : "63.2",
