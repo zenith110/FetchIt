@@ -70,7 +70,7 @@ def all_exams():
         data["All_Exams".lower()].append({"Exam": exam_name}) 
     return jsonify(data["All_Exams".lower()])
 
-@app.route("/FE/questions/allstacks", methods=["POST", "GET"])
+@app.route("/FE/questions/allstacks/", methods=["POST", "GET"])
 def all_stacks():
       # Creates a dictionary
     data = {}
