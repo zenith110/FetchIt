@@ -5,8 +5,14 @@ import json
 import os
 import random
 import boto3
+import subprocess
+import discord_webhook
+import docker
+import dockerhub_login
+import datetime
+import discord_key
 app = Flask(__name__, static_url_path='/static')
-with open("settings/aws_role.json") as loop:
+with open("src/settings/aws_role.json") as loop:
     data = json.load(loop)
     
 s3 = boto3.resource(
@@ -15,7 +21,45 @@ s3 = boto3.resource(
     aws_access_key_id=data['aws_access_key_id'],
     aws_secret_access_key=data['aws_secret_access_key']
 )
-animal_names = ["Fox", "Raccoon", "Chimpanzee", "Lion", "Gorilla", "Hedgehog"]
+
+@app.route("/update/", methods =["POST", "GET"])
+def update_data():
+    """
+    Does some configuring for dockerhub
+    """
+    client = docker.from_env()
+    client.login(username=dockerhub_login.username, password=dockerhub_login.password)
+
+    """
+    If there's a docker instance, pull the latest image from the repo
+    """
+    down = DiscordWebhook(url=discord_key.api_key, content="FetchIt is going down for a bit!")
+    down_response = down.execute()
+    try:
+        client.images.pull(dockerhub_login.repo)
+    # Removes the last instance and pulls the new one
+    except:
+        client.images.remove(dockerhub_login.repo + ":latest")
+        client.images.pull(dockerhub_login.repo)
+
+    # Attempts to deploys a docker container
+    try:
+        docker_container = client.containers.run(dockerhub_login.repo + ":latest", name= "fetchit")
+    # If a docker container exist with the name, remove it and make a new instance
+    except:
+        xatu = client.containers.get("fetchit")
+        xatu.stop()
+        client.containers.prune()
+        subprocess.Popen("sudo", "killall", "./app.py")
+        now = datetime.now()
+        month = datetime.date.today()
+        time_stamp = str(now.strftime("%b %d %Y %H:%M:%S"))
+        up = DiscordWebhook(url=discord_key.api_key, content='FetchIt is up again! Done at:\n' + time_stamp)
+        up_response = up.execute()
+        docker_container = client.containers.run(dockerhub_login.repo + ":latest", name= "fetchit")
+    return "Now running Xatu!"
+
+animal_names = ["Fox", "Raccoon", "Chimpanzee", "Lion", "Gorilla", "Hedgehog", "Hamster"]
 @app.route("/species/allspecies/", methods = ["POST", "GET"])
 def all_species():
     data = []
@@ -48,9 +92,9 @@ def species_runner(breed_name):
         data = {}
 
         # Creates a primary catagory
-        data[breed_name.lower()] = []
+        data["animal"] = []
         # Create a default JSON structure
-        data[breed_name.lower()].append({"Image": final_image}) 
+        data["animal"].append({"Image": final_image}) 
         return json.dumps(data, indent=4, sort_keys=True)
     except:
         return "We don't have that animal, sorry!"
@@ -63,7 +107,7 @@ def all_exams():
 
     # Creates a primary catagory
     data["All_exams".lower()] = []
-    names = os.listdir("FE/")
+    names = os.listdir("src/FE/")
     # Create a default JSON structure
     for exam_name in names:
         exam_name = exam_name.replace(".json", "")
@@ -77,7 +121,7 @@ def all_stacks():
 
     # Creates a primary catagory
     data["All_Stacks".lower()] = []
-    names = os.listdir("stacks/")
+    names = os.listdir("src/stacks/")
     # Create a default JSON structure
     for stack_name in names:
         stack_name = stack_name.replace(".json", "")
@@ -91,7 +135,7 @@ def all_dns():
 
     # Creates a primary catagory
     data["All_DSN".lower()] = []
-    names = os.listdir("dsn/")
+    names = os.listdir("src/dsn/")
     # Create a default JSON structure
     for dsn_name in names:
         dsn_name = dsn_name.replace(".json", "")
@@ -111,13 +155,13 @@ def dsn():
                 
 def random_dsn():
     json_file = random.choice(os.listdir("dsn"))
-    with open("dsn/" + json_file, encoding="utf8") as loop:
+    with open("src/dsn/" + json_file, encoding="utf8") as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)
     
 def dsn_runner(dsn_name):
     try:
-        with open("/dsn/" + dsn_name +  ".json", encoding="utf8") as json_file:
+        with open("src/dsn/" + dsn_name +  ".json", encoding="utf8") as json_file:
             data = json.load(json_file)
         return json.dumps(data, indent=4, sort_keys=True)
     except:
@@ -136,12 +180,12 @@ def stacks():
                 
 def random_stack():
     json_file = random.choice(os.listdir("stacks"))
-    with open("stacks/" + json_file, encoding="utf8") as loop:
+    with open("src/stacks/" + json_file, encoding="utf8") as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)
     
 def stack_runner(stack_name):
-    with open("stacks/" + stack_name +  ".json", encoding="utf8") as json_file:
+    with open("src/stacks/" + stack_name +  ".json", encoding="utf8") as json_file:
         data = json.load(json_file)
     return json.dumps(data, indent=4, sort_keys=True)
 
@@ -158,12 +202,12 @@ def exam():
 
 def random_exam():
     json_file = random.choice(os.listdir("FE"))
-    with open("FE/" + json_file) as loop:
+    with open("src/FE/" + json_file) as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)
     
 def exam_runner(exam_name):
-    with open("FE/" + exam_name + ".json") as json_file:
+    with open("src/FE/" + exam_name + ".json") as json_file:
         data = json.load(json_file)
     return json.dumps(data, indent=4, sort_keys=True)
 

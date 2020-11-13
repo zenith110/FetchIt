@@ -1,0 +1,6 @@
+discord_webhook
+docker
+flask
+requests
+datetime
+boto3
