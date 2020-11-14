@@ -50,7 +50,7 @@ def update_data():
         fetchit = client.containers.get("fetchit")
         fetchit.stop()
         client.containers.prune()
-        subprocess.Popen("sudo", "killall", "./app.py")
+        subprocess.Popen("sudo", "killall", "app.py")
         now = datetime.now()
         month = datetime.date.today()
         time_stamp = str(now.strftime("%b %d %Y %H:%M:%S"))
