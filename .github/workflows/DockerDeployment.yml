@@ -22,6 +22,7 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Dockerize
         run: |
+          echo "${{ secrets.DOCKER_HUB_LOGIN }}" > dockerhub_login.py
           cd src
           mkdir settings
           cd settings
