@@ -47,8 +47,8 @@ def update_data():
         docker_container = client.containers.run(dockerhub_login.repo + ":latest", name= "fetchit")
     # If a docker container exist with the name, remove it and make a new instance
     except:
-        xatu = client.containers.get("fetchit")
-        xatu.stop()
+        fetchit = client.containers.get("fetchit")
+        fetchit.stop()
         client.containers.prune()
         subprocess.Popen("sudo", "killall", "./app.py")
         now = datetime.now()
@@ -57,7 +57,7 @@ def update_data():
         up = DiscordWebhook(url=discord_key.api_key, content='FetchIt is up again! Done at:\n' + time_stamp)
         up_response = up.execute()
         docker_container = client.containers.run(dockerhub_login.repo + ":latest", name= "fetchit")
-    return "Now running Xatu!"
+    return "Now running FetchIt!"
 
 animal_names = ["Fox", "Raccoon", "Chimpanzee", "Lion", "Gorilla", "Hedgehog", "Hamster"]
 @app.route("/species/allspecies/", methods = ["POST", "GET"])
