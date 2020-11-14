@@ -6,7 +6,7 @@ import os
 import random
 import boto3
 import subprocess
-import discord_webhook
+from discord_webhook import DiscordWebhook, DiscordEmbed
 import docker
 import dockerhub_login
 import datetime
