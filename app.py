@@ -154,7 +154,7 @@ def dsn():
                 return dsn
                 
 def random_dsn():
-    json_file = random.choice(os.listdir("dsn"))
+    json_file = random.choice(os.listdir("src/dsn"))
     with open("src/dsn/" + json_file, encoding="utf8") as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)
@@ -179,7 +179,7 @@ def stacks():
                 return stack
                 
 def random_stack():
-    json_file = random.choice(os.listdir("stacks"))
+    json_file = random.choice(os.listdir("src/stacks"))
     with open("src/stacks/" + json_file, encoding="utf8") as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)
