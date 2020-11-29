@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, abort
 from flask.json import jsonify
 import requests
 import json
@@ -50,7 +50,7 @@ def update_data():
         fetchit = client.containers.get("fetchit")
         fetchit.stop()
         client.containers.prune()
-        subprocess.Popen("sudo", "killall", "app.py")
+        subprocess.Popen(["sudo", "killall", "app.py"])
         now = datetime.now()
         month = datetime.date.today()
         time_stamp = str(now.strftime("%b %d %Y %H:%M:%S"))
@@ -97,7 +97,7 @@ def species_runner(breed_name):
         data["animal"].append({"Image": final_image}) 
         return json.dumps(data, indent=4, sort_keys=True)
     except:
-        return "We don't have that animal, sorry!"
+        return abort(404)
 
 
 @app.route("/FE/exams/allexams/", methods =["POST", "GET"])
