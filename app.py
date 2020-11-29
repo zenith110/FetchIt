@@ -167,7 +167,7 @@ def dsn_runner(dsn_name):
             data = json.load(json_file)
         return json.dumps(data, indent=4, sort_keys=True)
     except:
-        return "500"
+        return abort(404)
 
 @app.route("/FE/questions/stack/", methods =["POST", "GET"])
 def stacks():
@@ -187,9 +187,12 @@ def random_stack():
     return json.dumps(data, indent=4, sort_keys=True)
     
 def stack_runner(stack_name):
-    with open("src/stacks/" + stack_name +  ".json", encoding="utf8") as json_file:
-        data = json.load(json_file)
-    return json.dumps(data, indent=4, sort_keys=True)
+    try:
+        with open("src/stacks/" + stack_name +  ".json", encoding="utf8") as json_file:
+            data = json.load(json_file)
+        return json.dumps(data, indent=4, sort_keys=True)
+    except:
+        return abort(404)
 
 @app.route("/FE/exam/", methods =["POST", "GET"])    
 def exam():
@@ -209,9 +212,12 @@ def random_exam():
     return json.dumps(data, indent=4, sort_keys=True)
     
 def exam_runner(exam_name):
-    with open("src/FE/" + exam_name + ".json") as json_file:
-        data = json.load(json_file)
-    return json.dumps(data, indent=4, sort_keys=True)
+    try:
+        with open("src/FE/" + exam_name + ".json") as json_file:
+            data = json.load(json_file)
+        return json.dumps(data, indent=4, sort_keys=True)
+    except:
+        return abort(404)
 
 @app.route("/", methods =["POST", "GET"])    
 def index():
