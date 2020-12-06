@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(5 pts) DSN (Dynamic Memory Management in C)\r",
+ "Seen_On": "Summer 2020",
+ "Problem_Statement": "Suppose we have a structure to store information about cases of juice.\n The structure is shown below: the\nname of the juice in the case is statically allocated.\n The structure also contains the number of containers\nof juice in that case.\n Complete the function below so that will takes 2 parameters: the name of a juice and\nan integer.\n Your function should create a new case of juice by allocating space for it, copying in the\ncontents specified by the formal parameters into the struct and returning a pointer to the new case.\n You\nmay assume that the pointer new_name is pointing to a valid string storing the name of a juice for which\nmemory has already been allocated and is 127 or fewer characters.\n",
+ "Problem_Code": "#include <string.h>\n#include <stdlib.h>\nstruct juice_case {\nchar name[128];\nint num_bottles;\n};\nstruct juice_case* create_case(char *new_name, int new_number) {",
+ "Solution": "struct juice_case* create_case(char *new_name, int new_number) {\n// allocate space for a new case \u2013 2 points\nstruct juice_case *new_case = malloc(sizeof(struct juice_case));\n// add the name for the case \u2013 1 point\n strcpy(new_case->name, new_name);\n// add the number for the case \u2013 1 point\n new_case->num_bottles = new_number;\n// return the case \u2013 1 point\n return new_case;}"
+}

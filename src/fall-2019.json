@@ -1,0 +1,7 @@
+{
+ "Problem_Name": " (5 pts) ALG (Stacks)",
+ "Seen_On": "Fall 2019",
+ "Problem_Statement": "Evaluate the following postfix expression shown below, using the algorithm that utilizes an operand stack.\n\nPut the value of the expression in the slot provided and show the state of the operand stack (in this case\nthe stacks should just have numbers in them) at each of the indicated points in the expression:\n\n3 4 2 1 + * 24 ^A 6 / 9 ^B 4 -\n^C + - /",
+ "Problem_Code": "",
+ "Solution": "A|24 12 3| B|9 4 12 3| C| 5 4 12 3| Value of the Postfix Expression: 1\nGrading: 1 pt for each stack (all or nothing), 2 pts for the answer (also all or nothing)"
+}

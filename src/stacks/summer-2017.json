@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(5 pts) DSN (Stacks)\r",
+ "Seen_On": "Summer 2017",
+ "Problem_Statement": "Convert the following infix expression to postfix using a stack.\n Show the contents of the stack at the indicated points (1, 2, 3) in the infix expression\\nA + B  * ( \u00b9 ( C/D) + E * F \u00b2) \u00b3 * G",
+ "Problem_Code": "",
+ "Solution": "Resulting postfix expression:\nA B + C D E + F / - G * -\nGrading: 1 point for each stack, 2 points for the whole expression (partial credit allowed.)"
+}
