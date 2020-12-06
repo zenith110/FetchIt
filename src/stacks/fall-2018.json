@@ -1,0 +1,7 @@
+{
+    "Problem_Name": "Stacks/Queues",
+    "Seen_On": "Fall 2018",
+    "Problem_Statement": "Consider modeling cars lining up at a traffic light in a simulation. \nWould it be better to utilize a stack in the simulation or a queue, to store the cars? \nClearly explain your choice.",
+    "Problem_Code": "Hypothethical, does not require to code up.",
+    "Solution": "A queue would be better. At a standard traffic light, the earlier a car gets to the light, the earlier the car gets to go through the light. Traffic works in this fair way - first one in, first out\n\nGrading: 0 pts if the answer is stack. 2 pts for saying queue, 3 pts for the expanation. The explanation can be as breif tas the second sentence in this solution. The second paragraph is further explanation not required for full credit."
+}

@@ -206,7 +206,7 @@ def exam():
                 return exam
 
 def random_exam():
-    json_file = random.choice(os.listdir("FE"))
+    json_file = random.choice(os.listdir("src/FE/"))
     with open("src/FE/" + json_file) as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)

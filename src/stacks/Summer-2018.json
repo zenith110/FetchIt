@@ -1,7 +1,7 @@
 {
-    "Problem_Name": "Stacks/Queues",
-    "Seen_On": "Fall 2018",
-    "Problem_Statement": "Consider modeling cars lining up at a traffic light in a simulation. \nWould it be better to utilize a stack in the simulation or a queue, to store the cars? \nClearly explain your choice.",
-    "Problem_Code": "N/A",
-    "Solution": "https://fetchitbucket.s3.us-east-2.amazonaws.com/FE/stack/fall-2018.PNG"
+    "Problem_Name": "(10 pts) ALG (Stacks)",
+    "Seen_On": "Summer 2018",
+    "Problem_Statement": "\na)Convert the following infix expression to postfix using a stack. Show the contents of the stack at the indicated points (1, 2, 3) in the infix expression\nA + B  * ( ¹ ( C/D) + E * F ²) ³ * G\nWhenever a recursive function is called, the function calls go onto a call stack. The depth of the call stack is the number of different recursive calls on the stack at a particular point in time, which indicates the number of different recursive calls that have started, but have not completed. What is the maximum stack depth of the call stack when the function fib(10) is excuted? Is this maximum stack depth equal to the number of times the recursive function, fib, is called?",
+    "Problem_Code": "int fib(int n) {\n\tif(n < 2) return n;\n\treturn fib(n -1) + fib(n-2)\n}\n Is max stack depth equal to the # of recursive calls?",
+    "Solution": "A queue would be better. At a standard traffic light, the earlier a car gets to the light, the earlier the car gets to go through the light. Traffic works in this fair way - first one in, first out\n\nGrading: 0 pts if the answer is stack. 2 pts for saying queue, 3 pts for the expanation. The explanation can be as breif tas the second sentence in this solution. The second paragraph is further explanation not required for full credit."
 }
