@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Dynamic Memory Management in C)",
+ "Seen_On": "Fall 2018",
+ "Problem_Statement": "Consider allocating space for an array of arrays, where each of the individual lengths of the different one\ndimensional arrays may differ.\n For example, we might want 5 arrays, which have lengths 10, 5, 20, 100\nand 50, respectively.\n Write a function makeArray that takes in an array of integers itself and the length\nof that array (so for the example above the first parameter would be the array storing 10, 5, 20, 100 and\n50 and the second parameter would have a value of 5) and allocates space for an array of arrays where\neach of the individual arrays have the lengths specified by the values of the input array.\n Before returning\na pointer to the array of arrays, the function should store 0 in every element of every array allocated.\n",
+ "Problem_Code": "int** makeArray(int* lengths, int numarrays) {}",
+ "Solution": "int** makeArray(int* lengths, int numarrays) {\n int** array = malloc(sizeof(int*)*numarrays);\n int i;\n for (i=0; i<numarrays; i++)\n array[i] = calloc(lengths[i], sizeof(int));\n return array;\n}\nGrading:\n3 pts initial malloc, (1 pt for **, 1 pt for sizeof(int*), 1 pt *numarrays) could use calloc as well.\n2 pts for loop\n4 pts for allocating each array (2 pts) and zeroing it out (2 pts), obviously calloc does this faster,\nbut you can also malloc and run a loop inside a loop\u2026\n1 pt for the return"
+}

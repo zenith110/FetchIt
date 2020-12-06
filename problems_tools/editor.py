@@ -28,7 +28,7 @@ class tool(formatter.Ui_MainWindow, QtWidgets.QMainWindow):
         file = open(fileName + ".json", "w")
         # Dumps the data to the file
         json.dump(data, file, indent = 1)
-        print("Dumping data now...")
+        print("Dumping data to " + fileName + " now")
         file.close()
         shutil.move(fileName + ".json", "../src/" + algodata.choice)
         

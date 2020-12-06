@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Dynamic Memory Management in C)",
+ "Seen_On": "Summer 2019",
+ "Problem_Statement": "Suppose we have an array of structures containing information about Cartesian points.\n The struct shown\nbelow contains two integers, one for the x coordinate and one for the y coordinate.\n For this problem, write\na function, createPoints, to create some random Cartesian points with each coordinate set to a random\ninteger in between 0 and 10, inclusive.\n\ncreatePoints takes in the number of points to be created, numPoints.\n Your function should dynamically\nallocate an array of numPoints CartPoints structs and set each of their x and y coordinates with\npseudorandom integer values in between 0 to 10, inclusive.\n You may assume that the random number\ngenerator has been seeded already.\n Your function should return a pointer to the array that was created and\ninitialized.\n",
+ "Problem_Code": "typedef struct CartPoint {\nint x;\nint y;\n} CartPoint;\nCartPoint* createPoints(int numPoints) {\nint i;}",
+ "Solution": "CartPoint* createPoints(int numPoints) {\n int i;\n // LHS = 1 pt, 3 pts RHS\n CartPoint *somePoints = malloc(sizeof(struct CartPoint) * numPoints);\n for(i=0; i<numPoints; i++) { // 1 pt\n somePoints[i].x = rand() % 11; // 2 pts\n somePoints[i].y = rand() % 11; // 2 pts\n }\n return somePoints; // 1 pt\n}"
+}
