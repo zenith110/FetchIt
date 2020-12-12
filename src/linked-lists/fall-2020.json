@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Linked Lists)",
+ "Seen_On": "Fall 2020",
+ "Problem_Statement": "Suppose we have a queue implemented as a doubly linked list using the structures shown below.\n Use\nhead for the front of the queue and tail for the end of the queue.\n Write a dequeue function for this queue.\n If the queue is NULL or is already empty, return 0 and take no\nother action.\n If the queue isn't empty, dequeue the appropriate value, make the necessary adjustments, and\nreturn the dequeued value.\n (Note: You must free the node that previously stored the dequeued value.\n)",
+ "Problem_Code": "struct node {\n int data;\n struct node* next, *prev;\n}\nstruct queue {\nint size;\nstruct node *head, *tail;\n} int dequeue(queue *thisQ)\r",
+ "Solution": "int dequeue(queue *thisQ) {\nif(thisQ == NULL) // Grading \u2013 1 pt\n return 0;\n if(thisQ->size == 0) // Grading \u2013 1 pt\n return 0;\n int retval = thisQ->head->data; // Grading \u2013 1 pt\n node *temp = thisQ->head; // Grading \u2013 1 pt\n\nthisQ->head = thisQ->head->next; // Grading \u2013 1 pt\nif (this->size > 1) // Grading \u2013 1 pt\n thisQ->head->prev = NULL;\n else\n thisQ->tail = NULL;\n free(temp); // Grading \u2013 2pts\n thisQ->size--; // Grading \u2013 1 pt\n return retval; // Grading \u2013 1 pt\n}"
+}

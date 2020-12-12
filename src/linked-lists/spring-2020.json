@@ -1,0 +1,7 @@
+{
+ "Problem_Name": " (10 pts) ALG (Linked Lists)",
+ "Seen_On": "Spring 2020",
+ "Problem_Statement": "Suppose we have a linked list implemented with the structure below.\n We also have a function that takes\nin the head of the list and the current number of nodes in the list.\n If we call what DoesItDo(head, 8) on the following list, show the list after the function has finished and\nstate the return value.\n\nhead -> 3 -> 8 -> 12 -> 5 -> 1 -> 7 -> 19 -> 2\nPicture of List Pointed to by head After Function Call:",
+ "Problem_Code": "typedef struct node {\n int num;\n struct node* next;\n} node;\nint whatDoesItDo (node * head, int size) {\nnode * current = head;\nnode * other;\nif (size < 2)\nreturn size;\nother = head->next;\nwhile (current != NULL) {\ncurrent->next = other->next;\nfree(other);\ncurrent = current->next;\nsize--;\nif(current != NULL && current->next !=NULL) {\ncurrent = current->next;\nother = current->next;\n}\n}\nreturn size;\n}",
+ "Solution": "Head -> 3 -> 12 -> 5 -> 7 -> 19\nFunction Return Value: 5\nGrading: 2 pts for return value (all or nothing), 3 pts for list, give 3 pts if correct, give 2 pts if off\nby 1 item, 1 pt if off by 2 items, 0 otherwise"
+}

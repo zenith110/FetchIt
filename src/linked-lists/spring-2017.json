@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Linked Lists)",
+ "Seen_On": "Spring 2017",
+ "Problem_Statement": "Consider the following function that takes in as a parameter a pointer to the front of a linked list(list)\nand the number of items in the list(size).\n node is defined as attached.\n If mystery(head, 7), is called, where head is shown below, what will the function return and\ndraw a picture of the resulting list, right after the call completes? (26 being the head -> 39 -> 26 -> 20 -> 26 -> 32 -> 39 -> NULL) ",
+ "Problem_Code": "typedef struct node {\n int data;\n struct node* next;\n} node;\nint mystery(node* list, int size) {\n node* prev = list;\n node* temp = list->next;\n while (temp != NULL) {\n if (list->data == temp->data) {\n prev->next = temp->next;\n free(temp);\n size--;\n temp = prev->next;\n }\n else {\n prev = prev->next;\n temp = temp->next;\n }\n }\n return size;\n}\r",
+ "Solution": "26(head) -> 39 -> 20 -> 32 -> 39 -> NULL. The function returns 5.\nGrading: 2 pts return value (all or nothing), 3 pts list, give partial for list as you see fit."
+}

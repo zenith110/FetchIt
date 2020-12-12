@@ -1,7 +1,0 @@
-{
- "Problem_Name": "(10 pts) DSN (Dynamic Memory Management in C)",
- "Seen_On": "Spring 2019",
- "Problem_Statement": "Suppose we have an array to store the TV shows we wanted to watch over break.\n Now that the break is\nover, we have watched all the shows and we need to delete our list.\n Our array is an array of structures that\ncontains the name of each show and the number of seasons to watch for that show.\n The name of the show\nis a dynamically allocated string to support the different lengths of show names.\n Write a function called\ndelete_show_list that will take in the show array as well as the length of that array, and free all the memory\nspace that the array previously took up.\n Your function should take in 2 parameters: the array called\nshow_list and the length of that array, length.\n It should free all the dynamically allocated memory\nassociated with the list and return NULL, to indicate that the list has been deleted.\n",
- "Problem_Code": "struct tv_show {\nchar *show_name;\nint number_of_seasons;\n};\nstruct tv_show * delete_show_list (struct tv_show *show_list, int length) {}",
- "Solution": "struct tv_show * delete_show_list (struct tv_show *show_list, int length) {\n int i;\n for(i = 0; i < length; i++) // 2 pts\n free(show_list[i].show_name); // 3 pts\n free(show_list); // 3 pts\n return NULL; // 2 pts\r}"
-}

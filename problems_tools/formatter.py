@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'formatter.ui',
 # licensing of 'formatter.ui' applies.
 #
-# Created: Sun Dec  6 15:12:20 2020
+# Created: Sat Dec 12 13:51:47 2020
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,6 +34,7 @@ class Ui_MainWindow(object):
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(50, 170, 91, 22))
         self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.save = QtWidgets.QPushButton(self.centralwidget)
@@ -74,6 +75,7 @@ class Ui_MainWindow(object):
         self.label_4.setText(QtWidgets.QApplication.translate("MainWindow", "Code", None, -1))
         self.label_5.setText(QtWidgets.QApplication.translate("MainWindow", "Solution", None, -1))
         self.comboBox.setItemText(0, QtWidgets.QApplication.translate("MainWindow", "dsn", None, -1))
-        self.comboBox.setItemText(1, QtWidgets.QApplication.translate("MainWindow", "stacks", None, -1))
+        self.comboBox.setItemText(1, QtWidgets.QApplication.translate("MainWindow", "linked-lists", None, -1))
+        self.comboBox.setItemText(2, QtWidgets.QApplication.translate("MainWindow", "stacks", None, -1))
         self.save.setText(QtWidgets.QApplication.translate("MainWindow", "submit", None, -1))
 

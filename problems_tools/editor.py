@@ -17,14 +17,15 @@ class tool(formatter.Ui_MainWindow, QtWidgets.QMainWindow):
     def algo_switch(self, index):
         algodata.choice = index
     def save_data(self):
-        problemName = self.problemName.text()
-        termDate = self.termDate.text()
+        problem_name = self.problemName.text()
+        term_date = self.termDate.text()
         Statement = self.Statement.text()
         Code = self.Code.text()
         Solution = self.Solution.text()
+        problem_name = problem_name.replace(".", ".\n").replace("\r", "")
         Statement = Statement.replace(".", ".\n").replace("\r", "")
-        fileName = str.lower(termDate).replace(" ", "-")
-        data = {'Problem_Name': problemName, 'Seen_On': termDate, 'Problem_Statement': Statement, 'Problem_Code': Code, 'Solution': Solution}
+        fileName = str.lower(term_date).replace(" ", "-")
+        data = {'Problem_Name': problem_name, 'Seen_On': term_date, 'Problem_Statement': Statement, 'Problem_Code': Code, 'Solution': Solution}
         file = open(fileName + ".json", "w")
         # Dumps the data to the file
         json.dump(data, file, indent = 1)

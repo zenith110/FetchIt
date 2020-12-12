@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Linked Lists)",
+ "Seen_On": "Fall 2018",
+ "Problem_Statement": "Consider storing an integer in a linked list by storing one digit in each node where the one\u2019s digit is stored\nin the first node, the ten\u2019s digit is stored in the second node, and so forth.\n Write a recursive function that\ntakes in a pointer to the head of a linked list storing an integer in this fashion and returns the value of the\ninteger.\n Assume that the linked list has 9 or fewer nodes, so that the computation will not cause any integer\noverflows.\n (For example, 295 would be stored as 5 followed by 9 followed by 2.\n) Use the struct shown\nbelow:",
+ "Problem_Code": "typedef struct node {\n int data;\n struct node* next;\n} node;\nint getValue(node *head)",
+ "Solution": "int getValue(node *head) {\n if (head == NULL)\n return 0;\n return head->data + 10*getValue(head->next);\n}\nGrading: 2 pts check head == NULL, 1 pt ret 0 (give full credit if base case is LL size 1),\n 1 pt return, 1 pt access head->data, 1 pt add, 1 pt 10*, 1 pt rec call, 2 pts parameter"
+}

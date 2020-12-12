@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Linked Lists)",
+ "Seen_On": "Fall 2017",
+ "Problem_Statement": "Write a recursive function that takes in the head of a linked list and frees all dynamically allocated\nmemory associated with that list.\n You may assume that all the nodes in any linked list passed to your\nfunction (including the head node) have been dynamically allocated.\n It\u2019s possible that your function\nmight receive an empty linked list (i.\ne.\n, a NULL pointer), and you should handle that case appropriately.\n\nNote that your function must be recursive in order to be eligible for credit.\n\nThe linked list node struct and the function signature are as follows:",
+ "Problem_Code": "typedef struct node {\nstruct node *next;\nint data;\n} node;\nvoid destroy_list(node *head)",
+ "Solution": "void destroy_list(node *head) {\nif (head == NULL)\nreturn;\ndestroy_list(head->next);\nfree(head);\n}\nGrading: Award 3 pts for correctly handling the base case. Award 3 points for a correct recursive call.\nAward 4 points for freeing head after the recursive call.\nNote: Some students might set head->next to NULL before freeing head., which causes some\nunnecessary computation, but doesn\u2019t render their solution incorrect. You can ignore that.\nHowever, if they set head itself to NULL before freeing it, they should not be eligible to receive the 4\npoints for freeing head after the recursive call. "
+}

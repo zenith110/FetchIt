@@ -1,0 +1,7 @@
+{
+ "Problem_Name": " (10 pts) ALG (Linked Lists)",
+ "Seen_On": "Spring 2020",
+ "Problem_Statement": "Suppose we have a stack implemented as a linked list.\n The stack is considered \u201cfull\u201d if it has 20 nodes\nand empty if the head pointer is NULL.\n The nodes of the stack have the following structure attached.\n Write a function to determine if the stack is full.\n ",
+ "Problem_Code": "typedef struct node {\n int data;\n struct node* next;\n} node; int isFull(node *stack)",
+ "Solution": "int isFull(node *stack) {\n int count = 0; //1 pt initializing a counter\n node *helper = stack;\n if (stack == NULL) //2 pts checking if stack is null\n return 0;\n\n while(helper != NULL) { //2 pts iter linked list\n count++; //1 pt incrementing counter\n helper = helper->next; //1 pt advancing node\n } // Note: can stop at 20\u2026\n if(count >= 20) //2 pts returning true iff 20 or more\n return 1;\n return 0; //1 pt returning false if no\n // Note: return count >= 20; takes care of both\u2026\n}\n// Alternate solution.\nint isFull(node* stack) {\n int i; // 1 pt\n for (i=0; i<20; i++) { // 2 pts\n if (stack == NULL) return 0; // 3 pts\n stack = stack->next; // 2 pts\n }\n return 1; // 2 pts\n}"
+}
