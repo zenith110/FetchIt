@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Binary Search Trees)",
+ "Seen_On": "Spring 2018",
+ "Problem_Statement": "Write a recursive function to find the leaf node in a binary search tree storing the minimum\nvalue.\n (Thus, of all leaf nodes in the binary search tree, the function must return a pointer to the\none that stores the smallest value.\n) If the pointer passed to the function is NULL (empty tree), the\nfunction should return NULL.\n",
+ "Problem_Code": "typedef struct bstNode {\n int data;\n struct bstNode *left;\n struct bstNode *right;\n} bstNode;\nbstNode* find_min_leaf(bstNode* root)",
+ "Solution": "bstNode* find_min_leaf(bstNode* root) {\n if (root == NULL) // 1 pt\n return NULL; // 1 pt\n if (root->left == NULL && root->right == NULL)// 2 pts\n return root; // 1 pt\n if (root->left != NULL) // 1 pt\n return find_min_left(root->left); // 2 pts\n return find_min_left(root->right); // 2 pts\n}"
+}

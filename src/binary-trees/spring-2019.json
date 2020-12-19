@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(5 pts) DSN (Binary Trees)",
+ "Seen_On": "Spring 2019",
+ "Problem_Statement": "Write a recursive function to print a postorder traversal of all the integers in a binary tree.\n The node\nstruct and function signature are as follows:",
+ "Problem_Code": " typedef struct node\n {\n struct node *left;\n struct node *right;\n int data;\n } node;\n void print_postorder(node *root)",
+ "Solution": " void print_postorder(node *root)\n {\n if (root == NULL)\n return;\n postorder(root->left);\n postorder(root->right);\n printf(\"%d \", root->data);\n }\nGrading:\n+1 point for correct base case\n+1 point for making both recursive calls (regardless of order)\n+1 point for printing root->data (regardless of order)\n+1 point for having both recursive calls, printing root->data, and doing all those things in the correct\norder.\n+1 point for getting all the syntax correct. (So, for example, if they called postorder(root.left) and\npostorder(root.right), they can get the 1 point for making both recursive calls, but they lose this 1 point\nfor using the dot instead of the arrow.)"
+}

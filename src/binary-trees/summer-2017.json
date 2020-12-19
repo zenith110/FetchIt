@@ -1,0 +1,7 @@
+{
+ "Problem_Name": " (10 pts) DSN (Binary Search Trees)",
+ "Seen_On": "Summer 2017",
+ "Problem_Statement": "(a) (3 pts) Given the following traversals, draw the Binary Search Tree they represent.\n\nPre-Order: 2, 0, 1, 10, 9, 12\nPost-Order: 1, 0, 9, 12, 10, 2\nIn-Order: 0, 1, 2, 9, 10, 12  (b) (5 pts) If the nodes of the BST have the following structure, construct a recursive function to count the\nnumber of nodes in the tree.\n (c) (2 pts) Write a single line of code calling the count function that assigns the number of nodes in the\nleft subtree of the tree pointed to by a pointer myTreePtr to the integer variable leftCount.\n You may\nassume that myTreePtr is not pointing to NULL and points to an actual bstNode.\n",
+ "Problem_Code": "typedef struct bstNode {\n struct bstNode *left, *right;\n char word[20];\n} bstNode;\nint count(bstNode *root)",
+ "Solution": "// 1 pt placing 2 at the root, 1 pt left subtree, 1 pt right subtree\r int count(bstNode *root){\n if (root == NULL) return 0; // 2 pts\n //1 pt 1, 1 pt left, 1 pt right\n return 1 + count(root->left) + count(root->right);\n}\r int leftCount = count(myTreePtr->left); // 2 pts"
+}

@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(5 pts) ALG (Binary Search Trees)",
+ "Seen_On": "Summer 2020",
+ "Problem_Statement": "Consider the following tree traversals:\nPre-order: 7 2 9 14 16\nPost-order: 2 16 14 9 7\nIn-order: 2 7 9 14 16\nIs it possible for a single binary search tree to give rise to all three of those traversals? If so, draw the\ntree.\n If not, clearly explain why it\u2019s not possible.\n",
+ "Problem_Code": "",
+ "Solution": "7 -> 2(l) -> 9(r) -> 14(r) -> 16(r)"
+}

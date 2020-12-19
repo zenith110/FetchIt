@@ -1,0 +1,7 @@
+{
+ "Problem_Name": " (10 pts) DSN (Binary Search Trees)",
+ "Seen_On": "Fall 2019",
+ "Problem_Statement": "A modified BST node stores the sum of the data values in its sub-tree.\n Complete writing the insert\nfunction shown below recursively, so that it takes in a pointer to the root of a binary search tree, root, and\nan integer, value, inserts a node storing value in it into the tree and returns a pointer to the root of the\nresulting tree.\n Notice that this task is more difficult than a usual binary tree insert since the sum values in\nseveral nodes must be updated as well.\n The struct used to store a node is shown below.\n",
+ "Problem_Code": "typedef struct bstNode {\n struct bstNode * left, * right;\n int data;\n int sum;\n} bstNode;\nbstNode* insert(bstNode * root, int value){\n if (root == NULL) {\n bstNode* res = malloc(sizeof(bstNode));\n res->data = ________;\n res->sum = _________;\n res->left = ________;\n res->right = _______;\n return res;\n }\n if (value <= root->data)\n _ ;\n else\n _;\n _;\n return root;\n}",
+ "Solution": "bstNode* insert(bstNode * root, int value){\n if (root == NULL) {\n bstNode* res = malloc(sizeof(bstNode));\n res->data = value; // 1 pt\n res->sum = value; // 1 pt\n res->left = NULL; // 1 pt\n res->right = NULL; // 1 pt\n return res;\n }\n if (value <= root->data)\n root->left = insert(root->left, value) ; // 2 pts\n else\n root->right = insert(root->right, value) ; // 2 pts\n root->sum += value ; // 2 pts\n return root;\n}"
+}

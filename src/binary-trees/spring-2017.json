@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Binary Trees)",
+ "Seen_On": "Spring 2017",
+ "Problem_Statement": "Michael took CS 1 last semester.\n During the Winter break he thought that it would be cool to keep track\nof all of the new words that he learned while reading a novel.\n He has stored all of his words (all 1-19\nlowercase letters only) in alphabetic order in a binary search tree (BST).\n The nodes of his BST are stored\nin the following structure: Michael wants to count the number of words in his binary search tree that come before a specified word\nin alphabetical order.\n Write a recursive function countBefore which takes in a pointer to the root of\na binary search tree storing the words and a string target (of 1-19 lowercase letters only) and returns\nthe number of words in the tree that come before target, alphabetically.\n",
+ "Problem_Code": "typedef struct {\n struct node *left, *right;\n char word[20];\n} bsNode; int countBefore(bsNode* root, char target[])",
+ "Solution": "int countBefore(bstNode* root, char target[]){\n if (root == NULL) return 0; // 2 pts\n if (strcmp(target, root->word) <= 0) // 2 pts\n return countBefore(root->left); // 2 pts\n // 1 pt return, 1 pt 1, 1 pt left, 1 pt right\n return 1 + countBefore(root->left) + countBefore(root->right);\n}"
+}

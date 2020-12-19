@@ -95,6 +95,21 @@
     </item>
     <item>
      <property name="text">
+      <string>heaps</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>tries</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>binary-trees</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>linked-lists</string>
      </property>
     </item>

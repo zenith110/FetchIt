@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Binary Search Trees)",
+ "Seen_On": "Summer 2018",
+ "Problem_Statement": "Complete writing function shown below recursively, so that it takes in a pointer to the root of a binary\nsearch tree, root, and an integer, value, and returns the number of nodes in the tree that are divisible by\nvalue.\n The struct used to store a node is shown below.\n",
+ "Problem_Code": "typedef struct bstNode {\n struct bstNode *left, *right;\n int data;\n} bstNode;\nint countDiv(bstNode *root, int value)",
+ "Solution": "int countDiv(bstNode *root, int value){\n if (root == NULL) return 0; //2 pts\n // 4 pts, 2 pts for each recursive call.\n int res = countDiv(root->left, value) +\n countDiv(root->right, value);\n // 2 pts for checking divisibility, 1 pt for adding 1\n if (root->data % value == 0)\n res++;\n // 1 pt for returning.\n return res;\n}"
+}

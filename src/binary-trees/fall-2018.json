@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Binary Search Trees)",
+ "Seen_On": "Fall 2018",
+ "Problem_Statement": "Complete writing the function shown below recursively, so that it takes in a pointer to the root of a binary\nsearch tree of strings, root, and a string, target, and returns 1 if the string is contained in the binary search\ntree and false otherwise.\n You may assume all strings stored in the tree contain lowercase letters only.\n In\norder to receive full credit, your function must run in O(h) time, where h is the height of the binary search\ntree storing all of the words.\n",
+ "Problem_Code": "typedef struct bstNode {\n struct bstNode *left, *right;\n char str[100];\n} bstNode;\nint search(bstNode *root, char* target)",
+ "Solution": "int search(bstNode *root, char* target){\n if (root == NULL) return 0; // 2 pts\n int cmp = strcmp(target, root->str);\n if (cmp < 0) // 1 pt\n return search(root->left, target); // 2 pts\n else if (cmp > 0) // 1 pt\n return search(root->right, target); // 2 pts\n return 1; // 2 pts\n}"
+}

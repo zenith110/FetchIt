@@ -1,0 +1,7 @@
+{
+ "Problem_Name": "(10 pts) DSN (Binary Trees)",
+ "Seen_On": "Spring 2019",
+ "Problem_Statement": "Write a function named fsl() (which stands for \u201cfind smallest leaf\u201d) that takes a pointer to the root of a\nbinary tree as its only argument and returns the value of the smallest leaf node in the tree.\n Note that the\ntree passed to your function will not necessarily be a binary search tree.\n If the pointer root is NULL, fsl\nshould return INT_MAX, which is defined below.\n\nYou cannot write any helper functions for this problem.\n You must complete all of your work in a single\nfunction.\n The function signature and node struct are given below.\n",
+ "Problem_Code": "#define INT_MAX 2147483647\ntypedef struct node {\n int data;\n struct node *left;\n struct node *right;\n} node;\nint fsl(node *root)",
+ "Solution": "int fsl(node *root) {\n int l_min;\n int r_min;\n if (root == NULL) // 2 pts: checking for NULL as base case\n return INT_MAX; // 1 pt\n if (root->left == NULL && root->right == NULL) // 2 pts: identify leaf\n return root->data; // 1 pt: correct return\n // value when leaf\n // is encountered\n l_min = fsl(root->left); // 2 pts: correct recursive calls (give\n r_min = fsl(root->right); // only 1 pt here if only one recursive\n // call)\n return (l_min < r_min) ? l_min : r_min); // 2 pts: returning min of\n // these two values\n}"
+}
