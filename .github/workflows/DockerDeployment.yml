@@ -22,12 +22,7 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Dockerize
         run: |
-          echo "${{ secrets.DOCKER_HUB_LOGIN }}" > dockerhub_login.py
-          cd src
-          mkdir settings
-          cd settings
-          echo "${{ secrets.AWS_ROLE }}" > aws_role.json
-          cd ../../
+          cd backend/
           docker build --tag fetchit .
       - name: docker push
         env:
