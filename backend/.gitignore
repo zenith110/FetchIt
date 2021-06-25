@@ -4,3 +4,4 @@ token.json
 settings/
 dockerhub_login.py
 discord_key.py
+dev.env/
