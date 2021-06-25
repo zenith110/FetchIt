@@ -89,9 +89,8 @@ def all_species():
 
 @app.route("/species/", methods =["GET"])    
 def species_entry():
-    """Fetches pubsub
-    Name requires hyphens when using a sub with spaces
-    If random is provided as a name, will return a random sub
+    """Fetches animal data
+    Name requires hyphens when using a sub_species with spaces
     ---
     parameters:
       - name: name
@@ -104,9 +103,9 @@ def species_entry():
         required: false
     responses:
         200:
-            description: Sub JSON response
+            description: Animal JSON response
         400:
-            description: Sub could not be found
+            description: Animal/sub species could not be found
             """
     if request.method == "GET":
             species_name = request.args.get("name")
@@ -269,4 +268,4 @@ def exam_runner(exam_name):
         return abort(404)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=8080)

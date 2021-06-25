@@ -11,10 +11,10 @@ services:
     # Restarts unless stopped
     restart: unless-stopped
     env_file:
-    - dev.env # configure creds
+    - dev.env # configure postgres
     # Maps the directory we'll refresh if changes are detected
     volumes:
-      - ./backend/:/home/backend/app
+      - ./backend:/home/fetchit/backend
     # Assigns the port
     ports:
       - 5000:5000
