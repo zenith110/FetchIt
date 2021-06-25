@@ -5,88 +5,137 @@ import json
 import os
 import random
 import boto3
-import subprocess
-from discord_webhook import DiscordWebhook, DiscordEmbed
-import docker
-import dockerhub_login
 import datetime
-import discord_key
+import os
+from flasgger import Swagger, swag_from
+from flask_cors import CORS
+import re
 app = Flask(__name__, static_url_path='/static')
-with open("src/settings/aws_role.json") as loop:
-    data = json.load(loop)
-    
+CORS(app)
+swagger = Swagger(app)
 s3 = boto3.resource(
     service_name='s3',
     region_name='us-east-2',
-    aws_access_key_id=data['aws_access_key_id'],
-    aws_secret_access_key=data['aws_secret_access_key']
+    aws_access_key_id="AKIAWXJG2JZYMYYLBGMR",
+    aws_secret_access_key="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"
 )
 
-@app.route("/update/", methods =["POST", "GET"])
-def update_data():
-    """
-    Does some configuring for dockerhub
-    """
-    client = docker.from_env()
-    client.login(username=dockerhub_login.username, password=dockerhub_login.password)
-
-    """
-    If there's a docker instance, pull the latest image from the repo
-    """
-    down = DiscordWebhook(url=discord_key.api_key, content="FetchIt is going down for a bit!")
-    down_response = down.execute()
-    try:
-        client.images.pull(dockerhub_login.repo)
-    # Removes the last instance and pulls the new one
-    except:
-        client.images.remove(dockerhub_login.repo + ":latest")
-        client.images.pull(dockerhub_login.repo)
-
-    # Attempts to deploys a docker container
-    try:
-        docker_container = client.containers.run(dockerhub_login.repo + ":latest", name= "fetchit")
-    # If a docker container exist with the name, remove it and make a new instance
-    except:
-        fetchit = client.containers.get("fetchit")
-        fetchit.stop()
-        client.containers.prune()
-        subprocess.Popen(["sudo", "killall", "app.py"])
-        now = datetime.now()
-        month = datetime.date.today()
-        time_stamp = str(now.strftime("%b %d %Y %H:%M:%S"))
-        up = DiscordWebhook(url=discord_key.api_key, content='FetchIt is up again! Done at:\n' + time_stamp)
-        up_response = up.execute()
-        docker_container = client.containers.run(dockerhub_login.repo + ":latest", name= "fetchit")
-    return "Now running FetchIt!"
-
-animal_names = ["Fox", "Raccoon", "Chimpanzee", "Lion", "Gorilla", "Hedgehog", "Hamster"]
-@app.route("/species/allspecies/", methods = ["POST", "GET"])
+@app.route("/species/allspecies/", methods=["GET"])
 def all_species():
-    data = []
-    for name in animal_names:
-        data.append({"name": name})
+    """Fetches all the animals and breeds we have available
+    ---
+    responses:
+        200:
+            description: Species/Animal names in JSON
+    """
+    animals = []
+    my_bucket = s3.Bucket("fetchitbucket")
+    for my_bucket_object in my_bucket.objects.all():
+        if("jpg" in my_bucket_object.key or "JPG" in my_bucket_object.key or "png" in my_bucket_object.key 
+            or "PNG" in my_bucket_object.key or ".jpeg" in my_bucket_object.key or "FE/" in my_bucket_object.key):
+            continue
+        animals.append(my_bucket_object.key)
+    sub_species = []
+    for breeds in animals:
+        for my_bucket_object in my_bucket.objects.all():
+            if("FE/" in my_bucket_object.key):
+                continue
+            
+            elif(str(breeds) in my_bucket_object.key):
+                sub_species.append(my_bucket_object.key)
 
-    return jsonify(data)
+    sub_species_names = []
 
-@app.route("/species/", methods =["POST", "GET"])    
+    for species in sub_species:
+        if("png" in species or "PNG" in species or "jpg" in species or "JPG" in species or "jpeg" in species or "PNG" in species
+            or "jpeg" in species or "JPEG" in species):
+            species = species.replace(" ", "-")
+            data = species.split("-")
+            species_names = data[0]
+            if "jpg" in species_names or "png" in species_names:
+                re.sub("/^.*jpg$", "", species_names)
+                species_names = species_names.split("/")
+                if (re.findall("^.*jpg$", species_names[1]) or re.findall("^.*png$", species_names[1]) or  re.findall("^.*JPG$", species_names[1])
+                    or re.findall("^.*jpeg$", species_names[1])):
+                    del species_names[1]
+                else:
+                    del species_names[2]
+                # Break apart the various strings to rejoin them to make it easier to find
+                species_names = "/".join(species_names)
+                species_names = species_names.split("/")
+                species_names = "/".join(species_names)
+                sub_species_names.append(species_names)
+
+    final_species_names = list(set(sub_species_names))
+
+    species_names_dict = {}
+    for names in final_species_names:
+        if(names not in species_names_dict):
+            if("/" in names):
+                name_split = names.split("/")
+                animal_species = name_split[0]
+                sub_species = name_split[1]
+                if(animal_species not in species_names_dict):
+                    species_names_dict[animal_species] = [sub_species]
+                else:
+                    species_names_dict[animal_species].append(sub_species)
+            else:
+                species_names_dict[names] = ""
+    print(species_names_dict)
+
+    return jsonify(species_names_dict)
+
+
+
+@app.route("/species/", methods =["GET"])    
 def species_entry():
+    """Fetches pubsub
+    Name requires hyphens when using a sub with spaces
+    If random is provided as a name, will return a random sub
+    ---
+    parameters:
+      - name: name
+        in: query
+        type: string
+        required: true
+      - name: sub-species
+        in: query
+        type: string
+        required: false
+    responses:
+        200:
+            description: Sub JSON response
+        400:
+            description: Sub could not be found
+            """
     if request.method == "GET":
             species_name = request.args.get("name")
             species_name = species_name.lower()
-            species = species_runner(species_name)
+            sub_species_name = request.args.get("sub-species")
+            species = species_runner(species_name, sub_species_name)
             return species
 
-def species_runner(breed_name):
+def species_runner(breed_name, sub_species_name):
     animal = []
     final_list = []
     my_bucket = s3.Bucket("fetchitbucket")
     try:
-        for object_summary in my_bucket.objects.filter(Prefix=breed_name + "/"):
-            animal.append(object_summary.key)
-        del animal[0]
-        for i in animal:
-            final_data = i.replace(breed_name, "https://fetchitbucket.s3.us-east-2.amazonaws.com/" + breed_name)
-            final_list.append(final_data)
+        if(sub_species_name == "" or sub_species_name is None):
+            for object_summary in my_bucket.objects.filter(Prefix=breed_name + "/"):
+                animal.append(object_summary.key)
+            del animal[0]
+            for i in animal:
+                final_data = i.replace(breed_name, "https://fetchitbucket.s3.us-east-2.amazonaws.com/" + breed_name)
+                final_list.append(final_data)
+        else:
+            for object_summary in my_bucket.objects.filter(Prefix=breed_name + "/" + sub_species_name):
+                animal.append(object_summary.key)
+            print(animal)
+            del animal[0]
+            for i in animal:
+                print(i)
+                final_data = i.replace(breed_name + "/" + sub_species_name, "https://fetchitbucket.s3.us-east-2.amazonaws.com/" + breed_name + "/" + sub_species_name)
+                final_list.append(final_data)
 
         final_image = random.choice(final_list)
         data = {}
@@ -219,8 +268,5 @@ def exam_runner(exam_name):
     except:
         return abort(404)
 
-@app.route("/", methods =["POST", "GET"])    
-def index():
-    return render_template("index.html")
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0")

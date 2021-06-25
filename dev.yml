@@ -1,0 +1,20 @@
+version: "3"
+services:
+ fetchit-backend:
+    # Builds the local image
+    image: fetchit-backend
+    build:
+      context: ./backend/
+      dockerfile: dev.dockerfile
+    # Creates the container name
+    container_name: fetchit-backend
+    # Restarts unless stopped
+    restart: unless-stopped
+    env_file:
+    - dev.env # configure creds
+    # Maps the directory we'll refresh if changes are detected
+    volumes:
+      - ./backend/:/home/backend/app
+    # Assigns the port
+    ports:
+      - 5000:5000
