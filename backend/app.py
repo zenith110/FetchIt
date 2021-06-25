@@ -16,8 +16,8 @@ swagger = Swagger(app)
 s3 = boto3.resource(
     service_name='s3',
     region_name='us-east-2',
-    aws_access_key_id="AKIAWXJG2JZYMYYLBGMR",
-    aws_secret_access_key="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"
+    aws_access_key_id=os.environ.get("aws_access_key_id"),
+    aws_secret_access_key=os.environ.get("aws_secret_access_key")
 )
 
 @app.route("/species/allspecies/", methods=["GET"])
