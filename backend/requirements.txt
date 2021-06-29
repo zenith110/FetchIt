@@ -6,3 +6,4 @@ datetime
 boto3
 flasgger
 flask-cors
+werkzeug

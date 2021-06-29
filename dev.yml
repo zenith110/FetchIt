@@ -14,7 +14,26 @@ services:
     - dev.env # configure postgres
     # Maps the directory we'll refresh if changes are detected
     volumes:
-      - ./backend:/home/fetchit/backend
+      - ./backend:/home/backend/app
     # Assigns the port
     ports:
       - 5000:5000
+
+ fetchit-frontend:
+    # Builds the local image
+    image: fetchit-frontend
+    build:
+      context: ./frontend/
+      dockerfile: dev.dockerfile
+    # Creates the container name
+    container_name: fetchit-frontend
+    # Restarts unless stopped
+    restart: unless-stopped
+    # Maps the directory we'll refresh if changes are detected
+    volumes:
+      - ./frontend:/app/frontend/
+    # Assigns the port
+    ports:
+      - 3000:5000
+    depends_on:
+      - fetchit-backend

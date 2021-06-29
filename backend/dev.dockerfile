@@ -1,7 +1,8 @@
 # set base image (host OS)
 FROM python:3.7.9-slim
 
-
+ENV FLASK_DEBUG=1
+ENV prod=False
 # set the working directory in the container
 WORKDIR /home/backend/app
 

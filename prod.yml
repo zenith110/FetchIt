@@ -1,0 +1,24 @@
+version: "3"
+services:
+  nginx: 
+    image: nginx:latest
+    container_name: production_nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - /ssl/:/ssl/
+    ports:
+      - 80:80
+      - 443:443
+  fetchit-backend:
+    # Builds the local image
+    image: zenith110/fetchit
+    # Creates the container name
+    container_name: fetchit-backend
+    # Restarts unless stopped
+    restart: unless-stopped
+    env_file:
+    - dev.env # configure postgres
+    # Maps the directory we'll refresh if changes are detected
+    # Assigns the port
+    ports:
+      - 8080:8080

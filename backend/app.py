@@ -7,9 +7,10 @@ import random
 import boto3
 import datetime
 import os
-from flasgger import Swagger, swag_from
+from flasgger import Swagger
 from flask_cors import CORS
 import re
+from werkzeug.utils import secure_filename
 app = Flask(__name__, static_url_path='/static')
 CORS(app)
 swagger = Swagger(app)
@@ -75,12 +76,14 @@ def all_species():
                 name_split = names.split("/")
                 animal_species = name_split[0]
                 sub_species = name_split[1]
+                animal_species = animal_species.replace(" ", "_")
                 if(animal_species not in species_names_dict):
                     species_names_dict[animal_species] = [sub_species]
                 else:
                     species_names_dict[animal_species].append(sub_species)
             else:
-                species_names_dict[names] = ""
+                species_include_a_space = names.replace(" ", "_")
+                species_names_dict[species_include_a_space] = ""
     print(species_names_dict)
 
     return jsonify(species_names_dict)
@@ -147,6 +150,15 @@ def species_runner(breed_name, sub_species_name):
     except:
         return abort(404)
 
+@app.route("/upload/single/", methods=["POST"])
+def single_upload():
+    content = request.json
+    animal_name = ["animal_name"]
+    sub_species = ["sub_species"]
+    animal_pic = request.files['file']
+    saved_animal_pic = 'static/images/'+str(secure_filename(animal_pic.filename))
+    animal_pic.save(saved_animal_pic)
+    print(saved_animal_pic)
 
 @app.route("/FE/exams/allexams/", methods =["POST", "GET"])
 def all_exams():
@@ -164,7 +176,7 @@ def all_exams():
 
 @app.route("/FE/questions/allstacks/", methods=["POST", "GET"])
 def all_stacks():
-      # Creates a dictionary
+    # Creates a dictionary
     data = {}
 
     # Creates a primary catagory
@@ -242,6 +254,7 @@ def stack_runner(stack_name):
     except:
         return abort(404)
 
+
 @app.route("/FE/exam/", methods =["POST", "GET"])    
 def exam():
     if request.method == "GET":
@@ -258,7 +271,8 @@ def random_exam():
     with open("src/FE/" + json_file) as loop:
         data = json.load(loop)
     return json.dumps(data, indent=4, sort_keys=True)
-    
+
+
 def exam_runner(exam_name):
     try:
         with open("src/FE/" + exam_name + ".json") as json_file:
@@ -267,5 +281,9 @@ def exam_runner(exam_name):
     except:
         return abort(404)
 
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080)
+    if(os.environ.get("prod") == "False"):
+        app.run(host="0.0.0.0", port=5000)
+    elif(os.environ.get("prod") == "True"):
+        app.run(host="0.0.0.0", port=8080)
