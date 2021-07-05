@@ -11,8 +11,7 @@ services:
     # Restarts unless stopped
     restart: unless-stopped
     env_file:
-    - dev.env # configure postgres
-    # Maps the directory we'll refresh if changes are detected
+    - dev.env # configures the s3 system
     volumes:
       - ./backend:/home/backend/app
     # Assigns the port
@@ -30,8 +29,6 @@ services:
     # Restarts unless stopped
     restart: unless-stopped
     # Maps the directory we'll refresh if changes are detected
-    volumes:
-      - ./frontend:/app/frontend/
     # Assigns the port
     ports:
       - 3000:3000

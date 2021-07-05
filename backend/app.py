@@ -152,13 +152,15 @@ def species_runner(breed_name, sub_species_name):
 
 @app.route("/upload/single/", methods=["POST"])
 def single_upload():
-    content = request.json
-    animal_name = ["animal_name"]
-    sub_species = ["sub_species"]
-    animal_pic = request.files['file']
-    saved_animal_pic = 'static/images/'+str(secure_filename(animal_pic.filename))
-    animal_pic.save(saved_animal_pic)
-    print(saved_animal_pic)
+    content = request.form.to_dict()
+    print(content)
+    # animal_name = ["animal_name"]
+    # sub_species = ["sub_species"]
+    # animal_pic = request.files['file']
+    # saved_animal_pic = 'static/images/'+str(secure_filename(animal_pic.filename))
+    # animal_pic.save(saved_animal_pic)
+    # print(saved_animal_pic)
+    return content
 
 @app.route("/FE/exams/allexams/", methods =["POST", "GET"])
 def all_exams():
