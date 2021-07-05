@@ -10,6 +10,6 @@ WORKDIR /home/backend/app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
-EXPOSE 5000
+EXPOSE 8080
 RUN pwd
 CMD [ "python", "./app.py" ]
