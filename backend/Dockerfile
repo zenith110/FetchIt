@@ -1,20 +1,15 @@
-# pull official base image
-FROM node:13.12.0-alpine
+# set base image (host OS)
+FROM python:3.7.9-slim
 
-# set working directory
-WORKDIR /app
+ENV FLASK_DEBUG=1
+ENV prod=False
+# set the working directory in the container
+WORKDIR /home/backend/app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
-
-# add app
-COPY . ./
-
-# start app
-CMD ["npm", "start"]
+# copy the content of the local src directory to the working directory
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5000
+RUN pwd
+CMD [ "python", "./app.py" ]
