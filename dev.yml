@@ -14,6 +14,7 @@ services:
     - dev.env # configures the s3 system
     volumes:
       - ./backend:/home/backend/app
+      - ./backend/uploads:/uploads
     # Assigns the port
     ports:
       - 5000:5000

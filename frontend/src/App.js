@@ -16,8 +16,7 @@ const App = (props) => {
   const [seeSubBreed, setSeeSubBreed] = useState(false);
   const [ formData, setFormData ] = useState({ files: [] });
   const inputFileRef = useRef();
-  // const url = "https://api.fetchit.dev"
-  const url = "http://localhost:5000"
+  const url = "https://api.fetchit.dev"
   let sub_species = []
   useEffect(() => {
     fetch(url + '/species/allspecies/')
@@ -53,14 +52,12 @@ const App = (props) => {
     setFileOption(e.target.value)
   }
   const uploadHandler = (e) => {
-    e.preventDefault()
     const data = new FormData();
-
     for (const file of formData.files) {
-      console.log(file)
+      data.append('animal', animalBreed)
       data.append('files[]', file, file.name);
+      data.append("sub_species", selectedSubSpecies)
     }
-    console.log(data)
     if (speciesSize <= 2) {
       setUploadSettings(true);
       setSeeSubBreed(false);
@@ -68,11 +65,11 @@ const App = (props) => {
         method: "POST",
         mode: 'no-cors',
         cache: "no-cache",
-        headers: {
-          "content_type": "multipart/form-data",
+        headers:{
+          contentType: "multipart/form-data",
         },
         body: data
-      })
+      }).then(alert("Thank you for your submission, it has been sent!"))
     }
     else if (speciesSize > 2) {
       setUploadSettings(true);
@@ -113,7 +110,7 @@ const App = (props) => {
           </select>
         </div>
         <form onSubmit={uploadHandler}>
-          <input type="file" onChange={e => setFormData({ ...formData, files: [ ...formData.files, ...e.target.files ] })}/>
+          <input type="file" accept=".png, .jpg" onChange={e => setFormData({ ...formData, files: [ ...formData.files, ...e.target.files ] })}/>
           <button>Upload</button>
         </form>
         <div style={{ display: uploadSettings ? 'block' : 'none' }}>

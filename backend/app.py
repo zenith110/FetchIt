@@ -21,6 +21,9 @@ s3 = boto3.resource(
     aws_secret_access_key=os.environ.get("aws_secret_access_key")
 )
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+uploads_path = os.path.join(basedir, 'uploads')
+
 @app.route("/species/allspecies/", methods=["GET"])
 def all_species():
     """Fetches all the animals and breeds we have available
@@ -154,12 +157,18 @@ def species_runner(breed_name, sub_species_name):
 def single_upload():
     content = request.form.to_dict()
     print(content)
-    # animal_name = ["animal_name"]
-    # sub_species = ["sub_species"]
-    # animal_pic = request.files['file']
-    # saved_animal_pic = 'static/images/'+str(secure_filename(animal_pic.filename))
-    # animal_pic.save(saved_animal_pic)
-    # print(saved_animal_pic)
+    print(request.files)
+    picture = request.files.to_dict()
+    picture_file = picture["files[]"]
+    animal_name = content["animal"]
+    sub_species_name = content["sub_species"]
+    if(sub_species_name == ""):
+        url = animal_name + "/" + picture_file.filename
+        print(url)
+        s3.Bucket("fetchitbucket").put_object(Key=url, Body=request.files["files[]"], ACL='public-read')
+    else:
+        url = animal_name + "/" + sub_species_name + "/" + picture_file.filename
+        s3.Bucket("fetchitbucket").put_object(Key=url, Body=request.files["files[]"], ACL='public-read')
     return content
 
 @app.route("/FE/exams/allexams/", methods =["POST", "GET"])
