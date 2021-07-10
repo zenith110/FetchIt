@@ -74,6 +74,15 @@ const App = (props) => {
     else if (speciesSize > 2) {
       setUploadSettings(true);
       setSeeSubBreed(true);
+      fetch(url + "/upload/single/", {
+        method: "POST",
+        mode: 'no-cors',
+        cache: "no-cache",
+        headers:{
+          contentType: "multipart/form-data",
+        },
+        body: data
+      }).then(alert("Thank you for your submission with sub species, it has been sent!"))
     }
   }
   return (
