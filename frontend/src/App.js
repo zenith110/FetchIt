@@ -5,18 +5,18 @@ import { Form, Container, Row, Col, DropdownButton, Dropdown } from 'react-boots
 const App = (props) => {
   const [animal, setAnimal] = useState([])
   const [animalBreed, setAnimalBreed] = useState("");
-  const [subSpecies, setSubspecies] = useState([])
-  const [visble, setVisble] = useState(false);;
+  const [subSpecies, setSubspecies] = useState([]);
+  const [visble, setVisble] = useState(false);
   const [selectedSubSpecies, setSelectedSubSpecies] = useState("");
   const [fileOption, setFileOption] = useState("");
   const [speciesSize, setSpeciesSize] = useState(0);
-  const [alertTextError, setAlertTextError] = useState("");
-  const [alertTextErrorStyle, setAlertTextErrorStyle] = useState(false);
   const [uploadSettings, setUploadSettings] = useState(false);
   const [seeSubBreed, setSeeSubBreed] = useState(false);
   const [ formData, setFormData ] = useState({ files: [] });
-  const inputFileRef = useRef();
+  const [singleVisble, setSingleVisble] = useState(false);
+  const [multiVisble, setMultiVisble] = useState(false);
   const url = "https://api.fetchit.dev"
+  // const url = "http://localhost:5000"
   let sub_species = []
   useEffect(() => {
     fetch(url + '/species/allspecies/')
@@ -49,40 +49,65 @@ const App = (props) => {
     setSelectedSubSpecies(e.target.value.slice(2))
   }
   const fileCheck = (e) => {
+    if(e.target.value === "single"){
+      setSingleVisble(true);
+      setMultiVisble(false);
+    }
+    else if(e.target.value === "multi"){
+      setSingleVisble(false);
+      setMultiVisble(true);
+    }
     setFileOption(e.target.value)
+  }
+  function multiUpload(uploadBoolSettings, subBoolBreed, message, data){
+    setUploadSettings(uploadBoolSettings);
+      setSeeSubBreed(subBoolBreed);
+      fetch(url + "/upload/multi/", {
+        method: "POST",
+        mode: 'no-cors',
+        cache: "no-cache",
+        headers:{
+          contentType: "multipart/form-data",
+        },
+        body: data
+      }).then(alert(message))
+  }
+
+  function singleUpload(uploadBoolSettings, subBoolBreed, message, data){
+    setUploadSettings(uploadBoolSettings);
+      setSeeSubBreed(subBoolBreed);
+      fetch(url + "/upload/single/", {
+        method: "POST",
+        mode: 'no-cors',
+        cache: "no-cache",
+        headers:{
+          contentType: "multipart/form-data",
+        },
+        body: data
+      }).then(alert(message))
   }
   const uploadHandler = (e) => {
     const data = new FormData();
+    
     for (const file of formData.files) {
       data.append('animal', animalBreed)
       data.append('files[]', file, file.name);
       data.append("sub_species", selectedSubSpecies)
     }
+    for (var pair of data) {
+      console.log(pair); 
+  }
     if (speciesSize <= 2) {
-      setUploadSettings(true);
-      setSeeSubBreed(false);
-      fetch(url + "/upload/single/", {
-        method: "POST",
-        mode: 'no-cors',
-        cache: "no-cache",
-        headers:{
-          contentType: "multipart/form-data",
-        },
-        body: data
-      }).then(alert("Thank you for your submission, it has been sent!"))
+      if(fileOption === "single")
+        singleUpload(true, false, "Thank you for your submission, it has been sent!", data)
+      else if(fileOption === "multi")
+        multiUpload(true, false, "Thank you for your submission, it has been sent!", data)
     }
     else if (speciesSize > 2) {
-      setUploadSettings(true);
-      setSeeSubBreed(true);
-      fetch(url + "/upload/single/", {
-        method: "POST",
-        mode: 'no-cors',
-        cache: "no-cache",
-        headers:{
-          contentType: "multipart/form-data",
-        },
-        body: data
-      }).then(alert("Thank you for your submission with sub species, it has been sent!"))
+      if(fileOption === "single")
+        singleUpload(true, true, "Thank you for your submission with sub species, it has been sent!", data)
+      else if(fileOption === "multi")
+        multiUpload(true, true, "Thank you for your submission with sub species, it has been sent!", data)
     }
   }
   return (
@@ -116,10 +141,12 @@ const App = (props) => {
           <select onClick={fileCheck}>
             <option selected hidden />
             <option value="single">Single files</option>
+            <option value="multi">Multiple files</option>
           </select>
         </div>
         <form onSubmit={uploadHandler}>
-          <input type="file" accept=".png, .jpg" onChange={e => setFormData({ ...formData, files: [ ...formData.files, ...e.target.files ] })}/>
+          <input type="file" style = {{ display: singleVisble ? 'block' : 'none' }} accept=".png, .jpg" onChange={e => setFormData({ ...formData, files: [ ...formData.files, ...e.target.files ] })}/>
+          <input type="file" multiple style = {{ display: multiVisble ? 'block' : 'none' }} accept=".png, .jpg" onChange={e => setFormData({ ...formData, files: [ ...formData.files, ...e.target.files ] })}/>
           <button>Upload</button>
         </form>
         <div style={{ display: uploadSettings ? 'block' : 'none' }}>
@@ -127,7 +154,6 @@ const App = (props) => {
           <p>File option: {fileOption}</p>
           <p style={{ display: seeSubBreed ? 'block' : 'none' }}>Sub Breed: {selectedSubSpecies}</p>
         </div>
-        <p style={{ display: alertTextErrorStyle ? 'block' : 'none' }}>{alertTextError}</p>
       </Container>
 
     </div>)

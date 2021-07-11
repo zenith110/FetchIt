@@ -153,24 +153,37 @@ def species_runner(breed_name, sub_species_name):
     except:
         return abort(404)
 
+
 @app.route("/upload/single/", methods=["POST"])
 def single_upload():
     content = request.form.to_dict()
-    print(content)
-    print(request.files)
     picture = request.files.to_dict()
     picture_file = picture["files[]"]
     animal_name = content["animal"]
     sub_species_name = content["sub_species"]
     if(sub_species_name == ""):
         url = animal_name + "/" + picture_file.filename
-        print(url)
         s3.Bucket("fetchitbucket").put_object(Key=url, Body=request.files["files[]"], ACL='public-read')
     else:
         url = animal_name + "/" + sub_species_name + "/" + picture_file.filename
         s3.Bucket("fetchitbucket").put_object(Key=url, Body=request.files["files[]"], ACL='public-read')
     return content
 
+# Allows multiple images to be uploaded
+@app.route("/upload/multi/", methods=["POST"])
+def multi_upload():
+    content = request.form.to_dict()
+    picture_data = request.files.getlist("files[]")
+    animal_name = content["animal"]
+    sub_species_name = content["sub_species"]
+    for picture_file in picture_data:
+        if(sub_species_name == ""):
+            url = animal_name + "/" + picture_file.filename
+            s3.Bucket("fetchitbucket").put_object(Key=url, Body=picture_file, ACL='public-read')
+        else:
+            url = animal_name + "/" + sub_species_name + "/" + picture_file.filename
+            s3.Bucket("fetchitbucket").put_object(Key=url, Body=picture_file, ACL='public-read')
+    return content
 @app.route("/FE/exams/allexams/", methods =["POST", "GET"])
 def all_exams():
      # Creates a dictionary
