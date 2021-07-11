@@ -16,6 +16,7 @@ const App = (props) => {
   const [singleVisble, setSingleVisble] = useState(false);
   const [multiVisble, setMultiVisble] = useState(false);
   const url = "https://api.fetchit.dev"
+  // Enable for localhost development
   // const url = "http://localhost:5000"
   let sub_species = []
   useEffect(() => {
@@ -94,9 +95,9 @@ const App = (props) => {
       data.append('files[]', file, file.name);
       data.append("sub_species", selectedSubSpecies)
     }
-    for (var pair of data) {
-      console.log(pair); 
-  }
+  //   for (var pair of data) {
+  //     console.log(pair); 
+  // }
     if (speciesSize <= 2) {
       if(fileOption === "single")
         singleUpload(true, false, "Thank you for your submission, it has been sent!", data)

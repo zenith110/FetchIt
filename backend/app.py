@@ -76,14 +76,18 @@ def all_species():
     for names in final_species_names:
         if(names not in species_names_dict):
             if("/" in names):
-                name_split = names.split("/")
-                animal_species = name_split[0]
-                sub_species = name_split[1]
-                animal_species = animal_species.replace(" ", "_")
-                if(animal_species not in species_names_dict):
-                    species_names_dict[animal_species] = [sub_species]
+                if("," in names):
+                    continue
                 else:
-                    species_names_dict[animal_species].append(sub_species)
+                    name_split = names.split("/")
+                    animal_species = name_split[0]
+                    sub_species = name_split[1]
+                    animal_species = animal_species.replace(" ", "_")
+                    
+                    if(animal_species not in species_names_dict):
+                        species_names_dict[animal_species] = [sub_species]
+                    else:
+                        species_names_dict[animal_species].append(sub_species)
             else:
                 species_include_a_space = names.replace(" ", "_")
                 species_names_dict[species_include_a_space] = ""
