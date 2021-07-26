@@ -18,7 +18,7 @@ jobs:
         run: |
           cd backend/
           pip install -r requirements.txt
-          python animal_name
+          python animal_name.py
         env:
               aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }} # passed our aws_access key as a secret so it doesn't leak
               aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
